@@ -1,29 +1,28 @@
+import React from 'react'
 import './App.css';
-import {Box, Container, Grid, Typography} from "@material-ui/core";
-import {cards} from './mock'
+import {Box, Container, Grid,} from "@material-ui/core";
+import {Switch, Route, Redirect} from 'react-router-dom';
 import {IdeaCard} from "./Components/Card/Card";
+import {Header} from "./Components/Header/Header";
+import {Ideas} from "./Components/Ideas/Ideas";
 
-function App() {
-  const Cards = cards.map((el) => <Grid item xs={12} sm={6}>
-    <IdeaCard card={el}/>
-  </Grid>)
+
+export const App = () => {
+
+
   return (
-    <Container maxWidth={false}>
-      <Box my={4}>
-        <Typography component={"h1"} variant={"h4"} color={"textPrimary"} align={"center"}
-                    gutterBottom>{'Нашы iдэi'}</Typography>
-      </Box>
-      <Grid
-        maxWidth={'sm'}
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={2}
-      >
-        {Cards}
-      </Grid>
-    </Container>
+    <Box>
+      <Container>
+        <Header/>
+        <Switch>
+          <Route path={'/ideas'} component={(props) => <Ideas type={'ideas'} {...props}/>}/>
+          <Route path={'/problems'} component={(props) => <Ideas type={'problems'} {...props}/>}/>
+          <Route path={'/solutions'} component={(props) => <Ideas type={'solutions'} {...props}/>}/>
+          <Redirect exact from='/' to='/ideas'/>
+        </Switch>
+
+      </Container>
+    </Box>
   );
 }
 
